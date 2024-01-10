@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Are you a bunde?</title>
+    <style>
+        body {
+            text-align: center;
+            margin: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <h1>Are you a bunde?</h1>
+    <p>pls pick one</p>
+
+    <button id="buttonYes" onclick="buttonClick('Yes')">Yes</button>
+    <button id="buttonNo" onclick="moveButton()">No</button>
+
+    <script>
+        function buttonClick(response) {
+            if (response === 'Yes') {
+                alert("Yes, correct");
+            } else {
+                alert("You clicked '" + response + "'");
+            }
+        }
+
+        function moveButton() {
+            var buttonNo = document.getElementById("buttonNo");
+
+            // Disable the "No" button temporarily
+            buttonNo.disabled = true;
+
+            // Get the current position of the button
+            var currentPosition = buttonNo.style.transform || "translate(0px, 0px)";
+            
+            // Parse the current position to extract X and Y values
+            var match = currentPosition.match(/(-?\d+)px, (-?\d+)px/);
+            
+            // Extract X and Y values
+            var currentX = parseInt(match[1]) || 0;
+            var currentY = parseInt(match[2]) || 0;
+
+            // Move the button by 1 cm in both X and Y directions
+            var newX = currentX + cmToPixels(1);
+            var newY = currentY + cmToPixels(0); // No vertical movement
+
+            // Set the new position of the button
+            buttonNo.style.transform = "translate(" + newX + "px, " + newY + "px)";
+
+            // Enable the "No" button after a delay (adjust as needed)
+            setTimeout(function() {
+                buttonNo.disabled = false;
+            }, 1000); // 1000 milliseconds (1 second) delay
+        }
+
+        // Helper function to convert centimeters to pixels (assuming standard DPI)
+        function cmToPixels(cm) {
+            // 1 inch = 2.54 cm, assuming standard DPI of 96 pixels per inch
+            return cm * 96 / 2.54;
+        }
+    </script>
+</body>
+</html>
